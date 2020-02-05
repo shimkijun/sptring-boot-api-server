@@ -1,0 +1,15 @@
+# Spring Boot configuration
+spring:
+  profiles:
+    active: development
+  # Jpa Configuration
+  jpa:
+    show-sql: true
+  # Database MySQL
+  datasource:
+    url: jdbc:mysql://localhost:3306/my_db?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: root
+    password: 1111
+  # Server configuration
+  server:
+    port: 8081 #set your port

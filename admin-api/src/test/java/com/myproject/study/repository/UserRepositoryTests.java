@@ -24,21 +24,38 @@ class UserRepositoryTests{
     @Test
     void create(){
         User user = User.builder()
-                .account("TestUser01")
-                .email("TestUser01@gmail.com")
-                .phoneNumber("010-1111-1111")
-                .createdAt(LocalDateTime.now())
-                .createdBy("TestUser01")
+                .account("TestUser03")
+                .password("test")
+                .status("REGISTERED")
+                .email("TestUser03@gmail.com")
+                .phoneNumber("010-3333-3333")
+                .registeredAt(LocalDateTime.now())
                 .build();
         User newUser = userRepository.save(user);
+        assertNotNull(newUser);
         log.info("USER => {}",newUser);
-        assertEquals(newUser.getAccount(),"TestUser01");
+
+        newUser.setStatus("CHANGE");
+        userRepository.save(newUser);
     }
 
     @Test
+    @Transactional
     void read(){
-        Optional<User> user = userRepository.findById(1L);
-        user.ifPresent(getUser -> log.info("USER => {}",getUser));
+        Optional<User> user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-1111");
+        user.ifPresent(getOrderGroups ->{
+            getOrderGroups.getOrderGroups().forEach(getOrderGroup -> {
+                                log.info("{}", getOrderGroup);
+                                getOrderGroup.getOrderDetails().forEach(
+                                        orderDetail -> {
+                                            log.info("{}",orderDetail);
+                                            log.info("{}",orderDetail.getItem());
+                                            log.info("{}",orderDetail.getItem().getPartner());
+                                            log.info("{}",orderDetail.getItem().getPartner().getCategory());
+                                        });
+                            });
+        });
+
     }
 
     @Test

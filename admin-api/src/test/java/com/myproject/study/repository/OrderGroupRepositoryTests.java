@@ -24,7 +24,6 @@ class OrderGroupRepositoryTests {
     void create(){
         OrderGroup orderGroup = OrderGroup.builder()
                 .status("COMPLETE")
-                .orderType("ALL")
                 .revName("홍길동")
                 .paymentType("CARD")
                 .totalPrice(BigDecimal.valueOf(900000))

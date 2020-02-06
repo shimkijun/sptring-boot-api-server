@@ -11,6 +11,9 @@ spring:
     username: root
     password: 1111
     driver-class-name: com.mysql.cj.jdbc.Driver
+  # Json Configuration
+  jackson:
+    property-naming-strategy: SNAKE_CASE
   # Server configuration
   server:
     port: 8081 #set your port

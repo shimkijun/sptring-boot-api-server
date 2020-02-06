@@ -23,7 +23,6 @@ class ItemRepositoryTests {
     @Test
     void create(){
         Item item = Item.builder()
-                .status("UNREGISTERED")
                 .name("삼성 노트북")
                 .title("삼성 노트북 A100")
                 .content("2020년형 노트북")

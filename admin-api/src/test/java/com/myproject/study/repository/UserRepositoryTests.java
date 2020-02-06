@@ -26,7 +26,6 @@ class UserRepositoryTests{
         User user = User.builder()
                 .account("TestUser03")
                 .password("test")
-                .status("REGISTERED")
                 .email("TestUser03@gmail.com")
                 .phoneNumber("010-3333-3333")
                 .registeredAt(LocalDateTime.now())
@@ -35,7 +34,6 @@ class UserRepositoryTests{
         assertNotNull(newUser);
         log.info("USER => {}",newUser);
 
-        newUser.setStatus("CHANGE");
         userRepository.save(newUser);
     }
 

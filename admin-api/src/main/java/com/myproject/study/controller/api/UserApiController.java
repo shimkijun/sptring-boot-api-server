@@ -9,7 +9,6 @@ import com.myproject.study.model.network.response.UserOrderInfoApiResponse;
 import com.myproject.study.service.BaseService;
 import com.myproject.study.service.UserApiLogicService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -19,16 +18,17 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/admin/user")
 public class UserApiController extends CrudController<UserApiRequest,UserApiResponse, User> {
 
     private final UserApiLogicService userApiLogicService;
 
-    public UserApiController(BaseService<UserApiRequest,
-            UserApiResponse, User> baseService,UserApiLogicService userApiLogicService) {
+    public UserApiController(BaseService<UserApiRequest, UserApiResponse, User> baseService,
+                             UserApiLogicService userApiLogicService) {
         super(baseService);
         this.userApiLogicService = userApiLogicService;
     }
+
 
     @GetMapping("/{id}/orderInfo")
     public Header<UserOrderInfoApiResponse> orderInfo(@PathVariable Long id){

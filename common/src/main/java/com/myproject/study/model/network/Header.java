@@ -1,6 +1,5 @@
 package com.myproject.study.model.network;
 
-import com.myproject.study.model.network.response.UserApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -63,4 +62,5 @@ public class Header<T> {
                 .description(description)
                 .build();
     }
+
 }

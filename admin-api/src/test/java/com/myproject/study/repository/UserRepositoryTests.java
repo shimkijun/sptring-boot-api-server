@@ -1,6 +1,7 @@
 package com.myproject.study.repository;
 
 import com.myproject.study.model.entity.User;
+import com.myproject.study.model.enumclass.UserStatus;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ class UserRepositoryTests{
         User user = User.builder()
                 .account("TestUser03")
                 .password("test")
+                .status(UserStatus.REGISTERED)
                 .email("TestUser03@gmail.com")
                 .phoneNumber("010-3333-3333")
                 .registeredAt(LocalDateTime.now())

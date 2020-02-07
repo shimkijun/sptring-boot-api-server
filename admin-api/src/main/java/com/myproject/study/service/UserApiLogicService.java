@@ -20,24 +20,20 @@ import java.util.stream.Collectors;
 @Service
 public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResponse, User> {
 
-
     public UserApiLogicService(JpaRepository<User, Long> baseRepository) {
         super(baseRepository);
     }
 
     @Override
-    public Header<UserApiResponse> create(Header<UserApiRequest> request) {
-
-        // request data
-        UserApiRequest body = request.getData();
+    public Header<UserApiResponse> create(UserApiRequest request) {
 
         // user 생성
         User user = User.builder()
-                .account(body.getAccount())
-                .password(body.getPassword())
+                .account(request.getAccount())
+                .password(request.getPassword())
                 .status(UserStatus.REGISTERED)
-                .phoneNumber(body.getPhoneNumber())
-                .email(body.getEmail())
+                .phoneNumber(request.getPhoneNumber())
+                .email(request.getEmail())
                 .registeredAt(LocalDateTime.now())
                 .build();
         User newUser = baseRepository.save(user);
@@ -119,7 +115,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 //
 //    }
 
-    private UserApiResponse response(User user){
+    public UserApiResponse response(User user){
 
         UserApiResponse userApiResponse = UserApiResponse.builder()
                 .id(user.getId())

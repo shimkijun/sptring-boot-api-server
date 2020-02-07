@@ -15,7 +15,7 @@ public class PartnerApiLogicService extends BaseService<PartnerApiRequest,Partne
     }
 
     @Override
-    public Header<PartnerApiResponse> create(Header<PartnerApiRequest> request) {
+    public Header<PartnerApiResponse> create(PartnerApiRequest request) {
         return null;
     }
 
@@ -36,7 +36,7 @@ public class PartnerApiLogicService extends BaseService<PartnerApiRequest,Partne
         return null;
     }
 
-    private Header<PartnerApiResponse> response(Partner partner) {
+    public Header<PartnerApiResponse> response(Partner partner) {
 
         PartnerApiResponse body = PartnerApiResponse.builder()
                 .id(partner.getId())

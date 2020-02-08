@@ -1,4 +1,4 @@
-package com.myproject.study.controller.api;
+package com.myproject.study.controller;
 
 import com.myproject.study.controller.CrudController;
 import com.myproject.study.model.entity.Partner;

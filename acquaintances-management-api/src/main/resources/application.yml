@@ -1,0 +1,31 @@
+# Spring Boot configuration
+spring:
+  profiles:
+    active: dev
+  # Jpa Configuration
+  jpa:
+    hibernate:
+      ddl-auto: create
+      format_sql: true
+    show-sql: true
+    database: mysql
+    open-in-view: false
+  # Database MySQL
+  datasource:
+    url: jdbc:mysql://localhost:3306/my_db?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: root
+    password: 1111
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # Logger configuration
+  logging:
+    pattern:
+      console: "%d %-5level %logger : %msg%n"
+    level:
+      org.springframework: info
+      org.hibernate: debug
+  # Json Configuration
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  # Server configuration
+  server:
+    port: 8081 #set your port

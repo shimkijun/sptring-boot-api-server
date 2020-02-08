@@ -27,16 +27,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String account;
+    @NonNull
+    private String email;
 
+    @NonNull
     private String password;
 
-    private String email;
+    private String phoneNumber;
+
+    @NonNull
+    private int role;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
-
-    private String phoneNumber;
 
     private LocalDateTime registeredAt;
 

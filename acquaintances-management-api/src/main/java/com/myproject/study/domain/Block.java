@@ -1,6 +1,7 @@
 package com.myproject.study.domain;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

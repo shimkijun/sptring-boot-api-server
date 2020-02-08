@@ -1,6 +1,7 @@
 package com.myproject.study.domain;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,7 +12,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-@ToString(exclude = {"phoneNumber"})
 public class Person {
 
     @Id
@@ -22,7 +22,7 @@ public class Person {
     private String name;
 
     @NonNull
-    private int age;
+    private Integer age;
 
     @NonNull
     private String bloodType;
@@ -37,7 +37,8 @@ public class Person {
 
     private String phoneNumber;
 
-    @OneToOne
+    // Person 1 : 1 Block
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
     private Block block;
 
 }

@@ -3,7 +3,6 @@ package com.myproject.study.controller.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.study.model.entity.User;
 import com.myproject.study.model.enumclass.UserStatus;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -26,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserApiControllerTests{
+class userApiControllerTests {
 
     @Autowired
     private MockMvc mvc;
@@ -38,7 +33,6 @@ class UserApiControllerTests{
     @Test
     void create() throws Exception {
         User user = User.builder()
-                .account("Test")
                 .password("1234")
                 .email("test@naver.com")
                 .status(UserStatus.REGISTERED)

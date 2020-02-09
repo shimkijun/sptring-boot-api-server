@@ -1,32 +1,42 @@
 package com.myproject.study.controller;
 
 import com.myproject.study.model.network.AccessToken;
-import com.myproject.study.model.network.Header;
 import com.myproject.study.model.network.request.UserApiRequest;
-import com.myproject.study.model.network.response.UserApiResponse;
 import com.myproject.study.service.UserApiLogicService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 @RestController
-@RequestMapping("/api/login")
 @RequiredArgsConstructor
+@RequestMapping("/api/login")
 public class SessionController {
 
     private final UserApiLogicService userApiLogicService;
 
     @PostMapping("/session")
-    public Header<UserApiResponse> create(
-            @RequestBody UserApiRequest request
-            ){
+    public ResponseEntity<?> create(@RequestBody UserApiRequest request) throws URISyntaxException {
         String token = "ACCESSTOKEN";
         AccessToken accessToken = AccessToken.builder()
                         .accessToken(token).build();
 
-        return userApiLogicService.authenticate(request);
+        String url = "/api/login/session";
+
+        UserApiRequest userApiRequest = UserApiRequest.builder()
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .build();
+
+        userApiLogicService.authenticate(userApiRequest);
+
+        return ResponseEntity.created(new URI(url))
+                .body(accessToken);
     }
 
 }

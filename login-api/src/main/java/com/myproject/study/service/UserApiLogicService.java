@@ -1,22 +1,23 @@
 package com.myproject.study.service;
 
 import com.myproject.study.model.entity.User;
-import com.myproject.study.model.network.Header;
 import com.myproject.study.model.network.request.UserApiRequest;
 import com.myproject.study.model.network.response.UserApiResponse;
-import com.myproject.study.repository.UserApiRepository;
+import com.myproject.study.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserApiLogicService {
 
-    private final UserApiRepository userApiRepository;
+    private final UserRepository userRepository;
 
-    public Header<UserApiResponse> authenticate(UserApiRequest request) {
-        return userApiRepository.findByEmailAndPassword(request);
+    public User authenticate(UserApiRequest request){
+        User user = userRepository.findByEmail(request.getEmail()).orElse(null);
+        return user;
     }
 
 }

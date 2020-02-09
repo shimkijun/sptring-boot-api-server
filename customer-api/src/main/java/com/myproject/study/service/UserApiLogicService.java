@@ -22,7 +22,6 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 
         // user 생성
         User user = User.builder()
-                .account(request.getAccount())
                 .password(request.getPassword())
                 .status(UserStatus.REGISTERED)
                 .phoneNumber(request.getPhoneNumber())
@@ -54,7 +53,6 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 
         UserApiResponse userApiResponse = UserApiResponse.builder()
                 .id(user.getId())
-                .account(user.getAccount())
                 .password(user.getPassword())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())

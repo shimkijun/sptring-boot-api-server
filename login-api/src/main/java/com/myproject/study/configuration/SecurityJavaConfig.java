@@ -21,9 +21,4 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
 }

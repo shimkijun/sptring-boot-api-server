@@ -29,7 +29,6 @@ public class UserSample{
             UserStatus status = (div == 0 ? UserStatus.REGISTERED : UserStatus.UNREGISTERED);
 
             User user = User.builder()
-                    .account("TestUser"+i)
                     .password("password"+i)
                     .status(status)
                     .email("TestUser"+i+"@gmail.com")

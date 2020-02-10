@@ -10,10 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
@@ -25,6 +27,9 @@ class UserApiLogicServiceTests {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserApiLogicService userApiLogicService;
 
@@ -32,8 +37,8 @@ class UserApiLogicServiceTests {
     @Test
     void authenticateWithValidAttributes() {
         UserApiRequest userApiRequest = UserApiRequest.builder()
-                .email("test@naver.com")
-                .password("test")
+                .email("TestUser03@gmail.com")
+                .password("fsagsafsa")
                 .build();
 
         User mockUser = User.builder()
@@ -42,9 +47,12 @@ class UserApiLogicServiceTests {
         given(userRepository.findByEmail(userApiRequest.getEmail()))
                 .willReturn(Optional.of(mockUser));
 
+        given(passwordEncoder.matches(any(),any())).willReturn(false);
+
         User user = userApiLogicService.authenticate(userApiRequest);
 
         assertEquals(user.getEmail(),userApiRequest.getEmail());
+
     }
 
     @DisplayName("이메일이 없을때")
@@ -57,8 +65,6 @@ class UserApiLogicServiceTests {
 
         given(userRepository.findByEmail(userApiRequest.getEmail()))
                 .willReturn(Optional.empty());
-
-        User user = userApiLogicService.authenticate(userApiRequest);
-
     }
+
 }

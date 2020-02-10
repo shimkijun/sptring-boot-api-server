@@ -3,10 +3,13 @@ package com.myproject.study.repository;
 import com.myproject.study.model.entity.User;
 import com.myproject.study.model.enumclass.UserStatus;
 import org.junit.jupiter.api.Test;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -22,11 +25,14 @@ class UserRepositoryTests{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Test
     void create(){
+        String encoderPassword = passwordEncoder.encode("fsagsafsa");
         User user = User.builder()
-                .account("TestUser03")
-                .password("test")
+                .password(encoderPassword)
                 .status(UserStatus.REGISTERED)
                 .email("TestUser03@gmail.com")
                 .phoneNumber("010-3333-3333")
@@ -45,15 +51,15 @@ class UserRepositoryTests{
         Optional<User> user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-1111");
         user.ifPresent(getOrderGroups ->{
             getOrderGroups.getOrderGroups().forEach(getOrderGroup -> {
-                                log.info("{}", getOrderGroup);
-                                getOrderGroup.getOrderDetails().forEach(
-                                        orderDetail -> {
-                                            log.info("{}",orderDetail);
-                                            log.info("{}",orderDetail.getItem());
-                                            log.info("{}",orderDetail.getItem().getPartner());
-                                            log.info("{}",orderDetail.getItem().getPartner().getCategory());
-                                        });
-                            });
+                log.info("{}", getOrderGroup);
+                getOrderGroup.getOrderDetails().forEach(
+                    orderDetail -> {
+                        log.info("{}",orderDetail);
+                        log.info("{}",orderDetail.getItem());
+                        log.info("{}",orderDetail.getItem().getPartner());
+                        log.info("{}",orderDetail.getItem().getPartner().getCategory());
+                    });
+            });
         });
 
     }
@@ -63,7 +69,6 @@ class UserRepositoryTests{
         Optional<User> user = userRepository.findById(1L);
 
         user.ifPresent(getUser -> {
-            getUser.setAccount("pppp");
             getUser.setUpdatedAt(LocalDateTime.now());
             getUser.setUpdatedBy("update method()");
 

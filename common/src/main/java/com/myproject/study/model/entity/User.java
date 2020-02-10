@@ -29,7 +29,6 @@ public class User {
 
     private String email;
 
-    @Transient
     private String password;
 
     private String phoneNumber;

@@ -10,6 +10,7 @@ import com.myproject.study.model.network.response.UserOrderInfoApiResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,17 +21,21 @@ import java.util.stream.Collectors;
 @Service
 public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResponse, User> {
 
-    public UserApiLogicService(JpaRepository<User, Long> baseRepository) {
+    public final PasswordEncoder passwordEncoder;
+
+    public UserApiLogicService(JpaRepository<User, Long> baseRepository, PasswordEncoder passwordEncoder) {
         super(baseRepository);
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public Header<UserApiResponse> create(UserApiRequest request) {
 
+        String encoderPassword =  passwordEncoder.encode(request.getPassword());
+
         // user 생성
         User user = User.builder()
-                .account(request.getAccount())
-                .password(request.getPassword())
+                .password(encoderPassword)
                 .status(UserStatus.REGISTERED)
                 .phoneNumber(request.getPhoneNumber())
                 .email(request.getEmail())
@@ -58,8 +63,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         Optional<User> user = baseRepository.findById(body.getId());
 
         return user.map(getUser -> {
-            getUser.setAccount(body.getAccount())
-                    .setPassword(body.getPassword())
+            getUser.setPassword(body.getPassword())
                     .setStatus(body.getStatus())
                     .setPhoneNumber(body.getPhoneNumber())
                     .setEmail(body.getEmail())
@@ -119,7 +123,6 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 
         UserApiResponse userApiResponse = UserApiResponse.builder()
                 .id(user.getId())
-                .account(user.getAccount())
                 .password(user.getPassword())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())

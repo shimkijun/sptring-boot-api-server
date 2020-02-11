@@ -17,6 +17,16 @@ $ npm start
 
 # generate static project
 $ npm run generate
+
+# nuxt stated
+npx vue init nuxt-community/starter-template <project-name>
+
+# nuxt/vuetify template init
+$ npx vue init vuetifyjs/nuxt <project-name>
+
+# windows cmd remove dir
+$ rd /s /q node_modules
 ```
 
 For detailed explanation on how things work, check out the [Nuxt.js](https://github.com/nuxt/nuxt.js) and [Vuetify.js](https://vuetifyjs.com/) documentation.
+

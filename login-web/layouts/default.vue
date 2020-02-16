@@ -1,13 +1,18 @@
 <template>
   <v-app>
     <v-navigation-drawer
-      :mini-variant.sync="miniVariant"
-      :clipped="clipped"
       v-model="drawer"
-      fixed
-      app
+      temporary
+      absolute
     >
-      <v-list>
+      <v-list shaped>
+        <v-subheader>
+          <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+          <nuxt-link to="/" id="logo">
+            <img src="~assets/images/logo.png" :alt="images.logo.description" />
+          </nuxt-link>
+        </v-subheader>
+        
         <v-list-tile
           router
           :to="item.to"
@@ -25,24 +30,25 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed app :clipped-left="clipped">
-      <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
-      </v-btn>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <nuxt-link to="/" id="logo">
+        <img src="~assets/images/logo.png" :alt="images.logo.description" />
+      </nuxt-link>
       <v-spacer></v-spacer>
-      <router-link to="/signin">SIGN IN</router-link>
+       <v-btn class="mx-2" fab dark small :color="changedIconColor" v-if="user">
+        <span>ㄱㅈ</span>
+      </v-btn>
+      <router-link to="/signin" v-else>
+        <div class="my-2">
+          <v-btn color="primary">로그인</v-btn>
+        </div>
+      </router-link>
     </v-toolbar>
     <v-content>
       <v-container>
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }} 개키우는개발자</span>
-    </v-footer>
   </v-app>
 </template>
 
@@ -50,17 +56,49 @@
   export default {
     data () {
       return {
-        clipped: false,
-        drawer: true,
-        fixed: false,
+        user: false,
+        clipped: true,
+        drawer: false,
         items: [
           { icon: 'apps', title: 'Welcome', to: '/' },
           { icon: 'bubble_chart', title: 'Inspire', to: '/inspire' }
         ],
-        miniVariant: false,
-        right: true,
-        rightDrawer: false
+        images: {
+          logo: {
+            path: '~assets/images/logo.png',
+            description: '사이트 로고'
+          }
+        }
       }
+    },
+    computed: {
+      changedIconColor () {
+        const colors = [
+          'success',
+          'error',
+          'warning',
+          'pink',
+          'secondary',
+          'teal',
+          'indigo',
+          'cyan',
+          'purple'
+        ]
+        let colorClassIndex = Math.floor(Math.random() * colors.length)
+        return colors[colorClassIndex]
+      }
+    },
+    methods: {
+  
     }
   }
 </script>
+<style scoped>
+  #logo{
+    width:100px;
+  }
+  #logo img{
+    width:100%;
+    vertical-align: middle;
+  }
+</style>

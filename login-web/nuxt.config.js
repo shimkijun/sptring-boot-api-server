@@ -16,6 +16,9 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
     ]
   },
+  modules: [
+    '@nuxtjs/style-resources'
+  ],
   plugins: ['~/plugins/vuetify.js'],
   css: ['~/assets/style/app.styl'],
   /*
@@ -38,7 +41,10 @@ module.exports = {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          exclude: /(node_modules)/,
+          options: {
+            fix: true
+          }
         })
       }
       if (process.server) {

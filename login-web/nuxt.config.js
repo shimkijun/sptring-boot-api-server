@@ -1,7 +1,11 @@
+/* eslint-disable no-unused-vars */
 import colors from 'vuetify/es5/util/colors'
 
 export default {
   mode: 'universal',
+  env: {
+    
+  },
   /*
   ** Headers of the page
   */
@@ -53,6 +57,9 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+        browserBaseURL : 'http://localhost:8080',
+        baseURL : 'http://localhost:8080',
+        https: false,
   },
   /*
   ** vuetify module configuration
@@ -84,5 +91,8 @@ export default {
     */
     extend (config, ctx) {
     }
-  }
+  },
+  server : {
+    port : 3099
+}
 }

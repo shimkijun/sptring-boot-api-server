@@ -25,7 +25,8 @@ public class SessionController {
         String token = "ACCESSTOKEN";
         AccessToken accessToken = AccessToken.builder()
                         .accessToken(token).build();
-
+        System.out.println(request.getEmail());
+        System.out.println(request.getPassword());
         String url = "/api/login/session";
 
         UserApiRequest userApiRequest = UserApiRequest.builder()

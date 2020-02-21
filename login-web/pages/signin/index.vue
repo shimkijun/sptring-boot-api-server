@@ -1,43 +1,46 @@
 <template>
-  <v-row align="center">
-    <v-form
-      ref="form"
-      v-model="valid"
-      :lazy-validation="lazy"
-    >
-      <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="E-mail"
-        required
-      />
-
-      <v-text-field
-        v-model="password"
-        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-        :rules="passwordRules"
-        :type="show ? 'text' : 'password'"
-        name="input-10-1"
-        label="Normal with hint text"
-        hint="At least 8 characters"
-        counter
-        @click:append="show = !show"
-      />
-
-      <v-btn
-        :disabled="!valid"
-        color="success"
-        class="mr-4"
-        @click="validate"
+  <v-container>
+    <v-row align="center">
+      <v-form
+        ref="form"
+        v-model="valid"
+        :lazy-validation="lazy"
       >
-        로그인
-      </v-btn>
-    </v-form>
-  </v-row>
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          label="e-mail"
+          required
+        />
+
+        <v-text-field
+          v-model="password"
+          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+          :rules="passwordRules"
+          :type="show ? 'text' : 'password'"
+          name="input-10-1"
+          label="password"
+          hint="8글자이상 12자 이하"
+          counter
+          @click:append="show = !show"
+        />
+
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          @click="validate"
+        >
+          로그인
+        </v-btn>
+      </v-form>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
   export default {
+    layout: 'disabledHeader',
     data (){
         return {
             show: false,

@@ -1,81 +1,125 @@
 <template>
-  <v-layout>
-    <v-app-bar
-      color="white"
-      app
-      clipped-left
-    >
-      <v-app-bar-nav-icon @click="miniVariant = !miniVariant" />
-
-      <v-toolbar-title>개키우는개발자</v-toolbar-title>
-
-      <v-spacer />
-      <v-btn
-        color="primary"
-        to="/signin"
-      >
-        로그인
-      </v-btn>
-    </v-app-bar>
+  <v-app id="sandbox">
     <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
+      v-model="primaryDrawer.model"
+      :clipped="primaryDrawer.clipped"
+      :floating="primaryDrawer.floating"
+      :mini-variant="primaryDrawer.mini"
+      :permanent="primaryDrawer.type === 'permanent'"
+      :temporary="primaryDrawer.type === 'temporary'"
       app
-      clipped
+      overflow
+    />
+
+    <v-app-bar
+      :clipped-left="primaryDrawer.clipped"
+      app
     >
-      <v-list
-        dense
-        nav
-        class="py-4"
-      >
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
+      <v-app-bar-nav-icon
+        v-if="primaryDrawer.type !== 'permanent'"
+        @click.stop="primaryDrawer.model = !primaryDrawer.model"
+      />
+      <v-toolbar-title>Vuetify</v-toolbar-title>
+    </v-app-bar>
+
+    <v-content>
+      <v-container fluid>
+        <v-row
+          align="center"
+          justify="center"
         >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+          <v-col cols="10">
+            <v-card>
+              <v-card-text>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <span>Scheme</span>
+                    <v-switch
+                      v-model="$vuetify.theme.dark"
+                      primary
+                      label="Dark"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <span>Drawer</span>
+                    <v-radio-group
+                      v-model="primaryDrawer.type"
+                      column
+                    >
+                      <v-radio
+                        v-for="drawer in drawers"
+                        :key="drawer"
+                        :label="drawer"
+                        :value="drawer.toLowerCase()"
+                        primary
+                      />
+                    </v-radio-group>
+                    <v-switch
+                      v-model="primaryDrawer.clipped"
+                      label="Clipped"
+                      primary
+                    />
+                    <v-switch
+                      v-model="primaryDrawer.floating"
+                      label="Floating"
+                      primary
+                    />
+                    <v-switch
+                      v-model="primaryDrawer.mini"
+                      label="Mini"
+                      primary
+                    />
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn text>
+                  Cancel
+                </v-btn>
+                <v-btn
+                  text
+                  color="primary"
+                >
+                  Submit
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-  </v-layout>
+    <v-footer
+      app
+    >
+      <span class="px-4">&copy; {{ new Date().getFullYear() }}</span>
+    </v-footer>
+  </v-app>
 </template>
-<script>
-export default {
-    data(){
-        return {
-           drawer: true,
-            items: [
-              { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-              { title: 'Photos', icon: 'mdi-image' },
-              { title: 'About', icon: 'mdi-help-box' },
-            ],
-            color: 'primary',
-            colors: [
-              'primary',
-              'blue',
-              'success',
-              'red',
-              'teal',
-            ],
-            miniVariant: false,
-        }
-    },
-    computed: {
-      
-    },
-    methods:{
-     
-    }
-    
-}
-</script> 
 
-<style scoped>
-  
-</style>
+<script>
+  export default {
+    data(){
+      return {
+        drawers: ['Default (no property)', 'Permanent', 'Temporary'],
+        primaryDrawer: {
+          model: null,
+          type: 'default (no property)',
+          clipped: false,
+          floating: false,
+          mini: false,
+        },
+        footer: {
+          inset: false,
+        },
+      }
+    },
+  }
+</script>

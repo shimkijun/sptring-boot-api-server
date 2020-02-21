@@ -1,41 +1,67 @@
 <template>
-  <v-container>
-    <v-row align="center">
-      <v-form
-        ref="form"
-        v-model="valid"
-        :lazy-validation="lazy"
+  <v-content>
+    <v-container fluid>
+      <v-row
+      
+        align="center"
+        justify="center"
       >
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="e-mail"
-          required
-        />
-
-        <v-text-field
-          v-model="password"
-          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="passwordRules"
-          :type="show ? 'text' : 'password'"
-          name="input-10-1"
-          label="password"
-          hint="8글자이상 12자 이하"
-          counter
-          @click:append="show = !show"
-        />
-
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          @click="validate"
-        >
-          로그인
-        </v-btn>
-      </v-form>
-    </v-row>
-  </v-container>
+        <v-col cols="3">
+          <v-card>
+            <v-card-text>
+              <p class="text--primary">
+                로그인
+              </p>
+              <v-row>
+                <v-col>
+                  <v-form
+                    ref="form"
+                    v-model="valid"
+                    :lazy-validation="lazy"
+                  >
+                    <v-text-field
+                      v-model="email"
+                      :rules="emailRules"
+                      label="e-mail"
+                      required
+                      outlined
+                      focus
+                    />
+                    <v-text-field
+                      v-model="password"
+                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                      :rules="passwordRules"
+                      :type="show ? 'text' : 'password'"
+                      name="input-10-1"
+                      label="password"
+                      hint="8글자이상 12자 이하"
+                      counter
+                      @click:append="show = !show"
+                    />
+                  </v-form>
+                </v-col>
+              </v-row>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                text
+                color="primary"
+                left
+              >
+                게정 만들기
+              </v-btn>
+              <v-btn
+                color="primary"
+              >
+                다음
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
@@ -44,7 +70,6 @@
     data (){
         return {
             show: false,
-            valid: true,
             password: '',
             passwordRules: [
                 v => !!v || '비밀번호를 입력하세요',
@@ -56,8 +81,9 @@
                 v => !!v || '이메일을 입력하세요',
                 v => /.+@.+\..+/.test(v) || '이메일 형식이 잘못되었습니다.',
             ],
-            select: null,
             lazy: false,
+            alignment: 'center',
+            justify: 'cneter'
         }
     },
     methods: {

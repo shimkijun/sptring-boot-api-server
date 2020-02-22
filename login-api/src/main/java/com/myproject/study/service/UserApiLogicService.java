@@ -26,5 +26,11 @@ public class UserApiLogicService {
         return user;
     }
 
+    public User emailExistLookup(UserApiRequest request){
+        User user = userRepository.findByEmail(request.getEmail()).orElse(null);
+
+        return user;
+    }
+
 
 }

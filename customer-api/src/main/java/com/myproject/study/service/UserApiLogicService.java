@@ -6,6 +6,7 @@ import com.myproject.study.model.network.Header;
 import com.myproject.study.model.network.request.UserApiRequest;
 import com.myproject.study.model.network.response.UserApiResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,16 +14,21 @@ import java.time.LocalDateTime;
 @Service
 public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResponse, User> {
 
-    public UserApiLogicService(JpaRepository<User, Long> baseRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserApiLogicService(JpaRepository<User, Long> baseRepository, PasswordEncoder passwordEncoder) {
         super(baseRepository);
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public Header<UserApiResponse> create(UserApiRequest request) {
 
+        String encodePassword = passwordEncoder.encode(request.getPassword());
+
         // user 생성
         User user = User.builder()
-                .password(request.getPassword())
+                .password(encodePassword)
                 .status(UserStatus.REGISTERED)
                 .phoneNumber(request.getPhoneNumber())
                 .email(request.getEmail())
@@ -53,12 +59,9 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 
         UserApiResponse userApiResponse = UserApiResponse.builder()
                 .id(user.getId())
-                .password(user.getPassword())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
                 .status(user.getStatus())
-                .registeredAt(user.getRegisteredAt())
-                .unregisteredAt(user.getUnregisteredAt())
                 .build();
 
         return userApiResponse;

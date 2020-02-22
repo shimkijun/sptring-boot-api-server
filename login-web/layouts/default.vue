@@ -1,15 +1,18 @@
 <template>
-  <v-app>
-    <Header />
+  <v-app id="sandbox">
+    <defaultHeader />
     <nuxt />
+    <defaultFooter />
   </v-app>
 </template>
 
 <script>
-import Header from '~/components/defaultHeader.vue'
+import defaultHeader from '~/components/defaultHeader.vue'
+import defaultFooter from '~/components/defaultFooter.vue'
   export default {
     components: {
-      Header
+      defaultHeader,
+      defaultFooter
     },
     data () {
       return {
@@ -25,11 +28,5 @@ import Header from '~/components/defaultHeader.vue'
   }
 </script>
 <style scoped>
-  #logo{
-    width:100px;
-  }
-  #logo img{
-    width:100%;
-    vertical-align: middle;
-  }
+ 
 </style>

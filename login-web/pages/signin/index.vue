@@ -2,62 +2,111 @@
   <v-content>
     <v-container fluid>
       <v-row
-      
         align="center"
         justify="center"
       >
         <v-col cols="3">
-          <v-card>
-            <v-card-text>
-              <p class="text--primary">
-                로그인
-              </p>
-              <v-row>
-                <v-col>
-                  <v-form
-                    ref="form"
-                    v-model="valid"
-                    :lazy-validation="lazy"
-                  >
-                    <v-text-field
-                      v-model="email"
-                      :rules="emailRules"
-                      label="e-mail"
-                      required
+          <v-stepper v-model="e1">
+            <v-stepper-items>
+              <v-stepper-content step="1">
+                <v-card>
+                  <v-card-text>
+                    <p class="text--primary">
+                      <strong>로그인</strong>
+                    </p>
+                    <v-row>
+                      <v-col>
+                        <v-form
+                          ref="emailForm"
+                          v-model="valid"
+                          :lazy-validation="lazy"
+                        >
+                          <emailField v-model="email" />
+                          <v-btn
+                            text 
+                            color="primary"
+                            height="30"
+                            class="pa-0"
+                            to="/"
+                          >
+                            이메일을 잊으셨나요?
+                          </v-btn>
+                        </v-form>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-btn
+                      text
+                      color="primary"
+                      left
+                      to="/signup"
+                    >
+                      계정 만들기
+                    </v-btn>
+                    <v-spacer />
+              
+                    <v-btn
+                      color="primary"
+                      @click="emailValidate"
+                    >
+                      다음
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-stepper-content>
+              <v-stepper-content step="2">
+                <v-card>
+                  <v-card-text>
+                    <p class="text--primary">
+                      시작하기
+                    </p>
+                    <v-chip
+                      class="ma-2"
+                      color="primary"
                       outlined
-                      focus
-                    />
-                    <v-text-field
-                      v-model="password"
-                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                      :rules="passwordRules"
-                      :type="show ? 'text' : 'password'"
-                      name="input-10-1"
-                      label="password"
-                      hint="8글자이상 12자 이하"
-                      counter
-                      @click:append="show = !show"
-                    />
-                  </v-form>
-                </v-col>
-              </v-row>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer />
-              <v-btn
-                text
-                color="primary"
-                left
-              >
-                게정 만들기
-              </v-btn>
-              <v-btn
-                color="primary"
-              >
-                다음
-              </v-btn>
-            </v-card-actions>
-          </v-card>
+                      pill
+                      @click="resetEmail"
+                    >
+                      <v-icon left>
+                        mdi-account-outline
+                      </v-icon>
+                      {{ email }}
+                    </v-chip>
+                    <v-row>
+                      <v-col>
+                        <v-form
+                          ref="passwordForm"
+                          v-model="valid"
+                          :lazy-validation="lazy"
+                        >
+                          <passwordField v-model="password" />
+                          <v-btn
+                            text 
+                            color="primary"
+                            height="30"
+                            class="pa-0"
+                            to="/"
+                          >
+                            비밀번호를 잊으셨나요?
+                          </v-btn>
+                        </v-form>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer />
+                    <v-btn
+                      color="primary"
+                      @click="validate"
+                    >
+                      다음
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-stepper-content>
+            </v-stepper-items>
+          </v-stepper>
         </v-col>
       </v-row>
     </v-container>
@@ -65,49 +114,61 @@
 </template>
 
 <script>
+import emailField from "~/components/signin/emailField.vue"
+import passwordField from "~/components/signin/passwordField.vue"
   export default {
     layout: 'disabledHeader',
+    components:{
+      emailField,
+      passwordField
+    },
     data (){
         return {
-            show: false,
-            password: '',
-            passwordRules: [
-                v => !!v || '비밀번호를 입력하세요',
-                v => (v && v.length <= 12) || '비밀번호는 12자리 이하 입니다.',
-                v => (v && v.length >= 8) || '비밀번호는 8자리 이상 입니다.',
-            ],
-            email: '',
-            emailRules: [
-                v => !!v || '이메일을 입력하세요',
-                v => /.+@.+\..+/.test(v) || '이메일 형식이 잘못되었습니다.',
-            ],
             lazy: false,
+            valid:false,
             alignment: 'center',
-            justify: 'cneter'
+            justify: 'cneter',
+            email:'',
+            password:'',
+            loading:false,
+            e1: 1,
         }
     },
     methods: {
 
       validate () {
-            if (this.$refs.form.validate()) {
-            this.snackbar = true
+            if (this.$refs.passwordForm.validate()) {
+              this.snackbar = true
+              this.$axios.post('/api/login/session',{
+                  email : this.email,
+                  password : this.password,
+              })
+              .then((res) => {
+                  console.log(res)
+              })
+              .catch((error) => {
+                  console.error(error)
+              })
             }
-            this.$axios.post('/api/login/session',{
-                email : this.email,
-                password : this.password,
-            })
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-            
-        },
-      reset () {
-        this.$refs.form.reset()
       },
-      
+      emailValidate(){
+        if (this.$refs.emailForm.validate()) {
+              this.$axios.post('/api/login/lookup',{
+                  email : this.email
+              })
+              .then((res) => {
+                  this.e1 = 2
+                  console.log(res)
+              })
+              .catch((error) => {
+                  this.e1 = 2
+                  console.error(error)
+              })
+        }
+      },
+      resetEmail(){
+        this.e1 = 1
+      }
     },
   }
 </script>

@@ -36,11 +36,10 @@ class userApiControllerTests {
                 .password("1234")
                 .email("test@naver.com")
                 .status(UserStatus.REGISTERED)
-                .phoneNumber("010-3333-3333")
                 .registeredAt(LocalDateTime.now())
                 .build();
 
-        mvc.perform(post("/api/customer/user")
+        mvc.perform(post("/api/customer/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))

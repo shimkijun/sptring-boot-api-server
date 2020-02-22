@@ -7,13 +7,13 @@ import com.myproject.study.model.network.response.UserApiResponse;
 import com.myproject.study.service.BaseService;
 import com.myproject.study.service.UserApiLogicService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/customer/user")
+@RequestMapping("/api/customer/signup")
 public class UserApiController extends CrudController<UserApiRequest,UserApiResponse, User> {
 
     private final UserApiLogicService userApiLogicService;

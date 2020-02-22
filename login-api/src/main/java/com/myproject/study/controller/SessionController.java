@@ -1,5 +1,6 @@
 package com.myproject.study.controller;
 
+import com.myproject.study.model.entity.User;
 import com.myproject.study.model.network.AccessToken;
 import com.myproject.study.model.network.request.UserApiRequest;
 import com.myproject.study.service.UserApiLogicService;
@@ -25,8 +26,6 @@ public class SessionController {
         String token = "ACCESSTOKEN";
         AccessToken accessToken = AccessToken.builder()
                         .accessToken(token).build();
-        System.out.println(request.getEmail());
-        System.out.println(request.getPassword());
         String url = "/api/login/session";
 
         UserApiRequest userApiRequest = UserApiRequest.builder()
@@ -38,6 +37,19 @@ public class SessionController {
 
         return ResponseEntity.created(new URI(url))
                 .body(accessToken);
+    }
+
+    @PostMapping("/lookup")
+    public ResponseEntity<?> emailExistValidate(@RequestBody UserApiRequest request) throws URISyntaxException {
+
+        UserApiRequest userApiRequest = UserApiRequest.builder()
+                .email(request.getEmail())
+                .build();
+
+        User user = userApiLogicService.emailExistLookup(userApiRequest);
+        System.out.println(user);
+        return ResponseEntity.ok()
+                .body(user);
     }
 
 }

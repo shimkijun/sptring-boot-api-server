@@ -1,125 +1,77 @@
 <template>
-  <v-app id="sandbox">
+  <div>
     <v-navigation-drawer
-      v-model="primaryDrawer.model"
-      :clipped="primaryDrawer.clipped"
-      :floating="primaryDrawer.floating"
-      :mini-variant="primaryDrawer.mini"
-      :permanent="primaryDrawer.type === 'permanent'"
-      :temporary="primaryDrawer.type === 'temporary'"
+      :clipped="clipped"
+      :mini-variant="mini"
       app
       overflow
-    />
-
+    >
+      <v-list
+        shaped
+        class="mt-3"
+      >
+        <v-spacer />
+        <v-list-item-group
+          v-model="selectedIndex"
+          color="primary"
+          role="listbox"
+        >
+          <v-list-item
+            v-for="(category, i) in categories"
+            :key="i"
+            role="listitem"
+            :to="category.link"
+          >
+            <v-list-item-icon>
+              <v-icon v-text="category.icon" />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title v-text="category.title" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
     <v-app-bar
-      :clipped-left="primaryDrawer.clipped"
+      :clipped-left="clipped"
       app
     >
       <v-app-bar-nav-icon
-        v-if="primaryDrawer.type !== 'permanent'"
-        @click.stop="primaryDrawer.model = !primaryDrawer.model"
+        @click.stop="mini = !mini"
       />
-      <v-toolbar-title>Vuetify</v-toolbar-title>
+      <v-toolbar-title>개키우는개발자</v-toolbar-title>
+
+      <v-spacer />
+    
+      <v-switch
+        v-model="$vuetify.theme.dark"
+        primary
+        label="Dark"
+        dense
+        hide-details
+      />
     </v-app-bar>
-
-    <v-content>
-      <v-container fluid>
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col cols="10">
-            <v-card>
-              <v-card-text>
-                <v-row>
-                  <v-col
-                    cols="12"
-                    md="6"
-                  >
-                    <span>Scheme</span>
-                    <v-switch
-                      v-model="$vuetify.theme.dark"
-                      primary
-                      label="Dark"
-                    />
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    md="6"
-                  >
-                    <span>Drawer</span>
-                    <v-radio-group
-                      v-model="primaryDrawer.type"
-                      column
-                    >
-                      <v-radio
-                        v-for="drawer in drawers"
-                        :key="drawer"
-                        :label="drawer"
-                        :value="drawer.toLowerCase()"
-                        primary
-                      />
-                    </v-radio-group>
-                    <v-switch
-                      v-model="primaryDrawer.clipped"
-                      label="Clipped"
-                      primary
-                    />
-                    <v-switch
-                      v-model="primaryDrawer.floating"
-                      label="Floating"
-                      primary
-                    />
-                    <v-switch
-                      v-model="primaryDrawer.mini"
-                      label="Mini"
-                      primary
-                    />
-                  </v-col>
-                </v-row>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-                <v-btn text>
-                  Cancel
-                </v-btn>
-                <v-btn
-                  text
-                  color="primary"
-                >
-                  Submit
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-content>
-
-    <v-footer
-      app
-    >
-      <span class="px-4">&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
-  </v-app>
+  </div>
 </template>
 
 <script>
   export default {
     data(){
       return {
-        drawers: ['Default (no property)', 'Permanent', 'Temporary'],
-        primaryDrawer: {
-          model: null,
-          type: 'default (no property)',
-          clipped: false,
-          floating: false,
-          mini: false,
-        },
-        footer: {
-          inset: false,
-        },
+        clipped: true,
+        mini: false,
+        selectedIndex: 0,
+        categories: [
+          { title: 'HOME', icon: 'mdi-home', link:'/' },
+          { title: '로그인', icon: 'mdi-account' , link:'/signin'},
+        ],
       }
     },
   }
 </script>
+
+<style >
+  a{
+     text-decoration: none;
+  }
+</style>

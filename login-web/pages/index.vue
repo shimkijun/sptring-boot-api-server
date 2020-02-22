@@ -5,7 +5,7 @@
         <h1>{{ msg }}</h1>
         <div
           id="map"
-          style="width:100%;height:100vh;"
+          class="map"
         />
       </v-container>
     </v-content>
@@ -56,3 +56,11 @@
     }
   }
 </script>
+
+<style scoped>
+  .map{
+    width:100%;
+    height:600px;
+    z-index: 0;
+  }
+</style>

@@ -16,7 +16,8 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "load-script-once": "^2.0.1",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "vue-beautiful-chat": "^2.3.1"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0",

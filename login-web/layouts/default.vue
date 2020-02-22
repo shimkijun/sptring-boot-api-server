@@ -1,18 +1,19 @@
 <template>
   <v-app id="sandbox">
-    <defaultHeader />
+    <default-header />
     <nuxt />
-    <defaultFooter />
+    <default-footer />
   </v-app>
 </template>
 
 <script>
-import defaultHeader from '~/components/defaultHeader.vue'
-import defaultFooter from '~/components/defaultFooter.vue'
+import defaultHeader from '~/components/default-header.vue'
+import defaultFooter from '~/components/default-footer.vue'
+
   export default {
     components: {
       defaultHeader,
-      defaultFooter
+      defaultFooter,
     },
     data () {
       return {

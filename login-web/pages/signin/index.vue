@@ -21,7 +21,7 @@
                           v-model="valid"
                           :lazy-validation="lazy"
                         >
-                          <emailField v-model="email" />
+                          <email-field v-model="email" />
                           <v-btn
                             text 
                             color="primary"
@@ -80,7 +80,7 @@
                           v-model="valid"
                           :lazy-validation="lazy"
                         >
-                          <passwordField v-model="password" />
+                          <password-field v-model="password" />
                           <v-btn
                             text 
                             color="primary"
@@ -114,8 +114,8 @@
 </template>
 
 <script>
-import emailField from "~/components/signin/emailField.vue"
-import passwordField from "~/components/signin/passwordField.vue"
+import emailField from "~/components/signin/email-field.vue"
+import passwordField from "~/components/signin/password-field.vue"
   export default {
     layout: 'disabledHeader',
     components:{
@@ -139,7 +139,7 @@ import passwordField from "~/components/signin/passwordField.vue"
       validate () {
             if (this.$refs.passwordForm.validate()) {
               this.snackbar = true
-              this.$axios.post('/api/login/session',{
+              this.$axios.post('/api/signin/session',{
                   email : this.email,
                   password : this.password,
               })
@@ -153,7 +153,7 @@ import passwordField from "~/components/signin/passwordField.vue"
       },
       emailValidate(){
         if (this.$refs.emailForm.validate()) {
-              this.$axios.post('/api/login/lookup',{
+              this.$axios.post('/api/signin/lookup',{
                   email : this.email
               })
               .then((res) => {

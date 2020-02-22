@@ -18,9 +18,9 @@
                     v-model="valid"
                     :lazy-validation="lazy"
                   >
-                    <emailField v-model="email" />
-                    <passwordField v-model="password" />
-                    <passwordField v-model="reconfirmPassword" />
+                    <email-field v-model="email" />
+                    <password-field v-model="password" />
+                    <password-field v-model="reconfirmPassword" />
                   </v-form>
                 </v-col>
               </v-row>
@@ -51,8 +51,9 @@
 </template>
 
 <script>
-import emailField from "~/components/signin/emailField.vue"
-import passwordField from "~/components/signin/passwordField.vue"
+import emailField from "~/components/signin/email-field.vue"
+import passwordField from "~/components/signin/password-field.vue"
+
   export default {
     layout: 'disabledHeader',
     components:{
@@ -80,11 +81,10 @@ import passwordField from "~/components/signin/passwordField.vue"
             }
 
             if (this.$refs.siginupForm.validate()) {
-                console.log('d')
-              this.snackbar = true
-              this.$axios.post('/api/customer/signup',{
-                  email : this.email,
-                  password : this.password
+                this.snackbar = true
+                this.$axios.post('/api/customer/signup',{
+                    email : this.email,
+                    password : this.password
               })
               .then((res) => {
                   console.log(res)

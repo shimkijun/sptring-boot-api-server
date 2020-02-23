@@ -1,0 +1,6 @@
+POST http://localhost:8080/formlogin
+Content-Type: application/json
+
+{"userId": "abcd","password": "1234"}
+
+###

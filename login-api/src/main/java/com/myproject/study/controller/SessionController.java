@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/login")
+@RequestMapping("/api/signin")
 public class SessionController {
 
     private final UserApiLogicService userApiLogicService;

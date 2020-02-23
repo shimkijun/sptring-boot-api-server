@@ -1,5 +1,6 @@
 package com.myproject.study.model.entity;
 
+import com.myproject.study.model.enumclass.UserRole;
 import com.myproject.study.model.enumclass.UserStatus;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -19,7 +20,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Accessors(chain = true)
-@ToString(exclude = {"orderGroup"})
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
@@ -33,8 +33,7 @@ public class User {
 
     private String phoneNumber;
 
-    @Builder.Default
-    private int role = 1;
+    private String role;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
@@ -55,7 +54,7 @@ public class User {
     @LastModifiedBy
     private String updatedBy;
 
-    // User 1 : N orderGroup
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<OrderGroup> orderGroups;
+//    // User 1 : N orderGroup
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    private List<OrderGroup> orderGroups;
 }

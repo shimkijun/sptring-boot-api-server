@@ -45,24 +45,24 @@ class UserRepositoryTests{
         userRepository.save(newUser);
     }
 
-    @Test
-    @Transactional
-    void read(){
-        Optional<User> user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-1111");
-        user.ifPresent(getOrderGroups ->{
-            getOrderGroups.getOrderGroups().forEach(getOrderGroup -> {
-                log.info("{}", getOrderGroup);
-                getOrderGroup.getOrderDetails().forEach(
-                    orderDetail -> {
-                        log.info("{}",orderDetail);
-                        log.info("{}",orderDetail.getItem());
-                        log.info("{}",orderDetail.getItem().getPartner());
-                        log.info("{}",orderDetail.getItem().getPartner().getCategory());
-                    });
-            });
-        });
+//    @Test
+//    @Transactional
+//    void read(){
+//        Optional<User> user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-1111");
+//        user.ifPresent(getOrderGroups ->{
+//            getOrderGroups.getOrderGroups().forEach(getOrderGroup -> {
+//                log.info("{}", getOrderGroup);
+//                getOrderGroup.getOrderDetails().forEach(
+//                    orderDetail -> {
+//                        log.info("{}",orderDetail);
+//                        log.info("{}",orderDetail.getItem());
+//                        log.info("{}",orderDetail.getItem().getPartner());
+//                        log.info("{}",orderDetail.getItem().getPartner().getCategory());
+//                    });
+//            });
+//        });
 
-    }
+//    }
 
     @Test
     void update(){

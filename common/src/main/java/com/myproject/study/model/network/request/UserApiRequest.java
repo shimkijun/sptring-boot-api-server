@@ -1,5 +1,6 @@
 package com.myproject.study.model.network.request;
 
+import com.myproject.study.model.enumclass.UserRole;
 import com.myproject.study.model.enumclass.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,8 @@ public class UserApiRequest {
     private UserStatus status;
 
     private String email;
+
+    private UserRole role;
 
     private String phoneNumber;
 

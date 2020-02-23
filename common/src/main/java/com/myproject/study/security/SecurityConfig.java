@@ -2,7 +2,11 @@ package com.myproject.study.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.study.security.filters.FormLoginFilter;
+import com.myproject.study.security.filters.JwtAuthenticationFilter;
 import com.myproject.study.security.handlers.FormLoginAuthenticationSuccessHandler;
+import com.myproject.study.security.handlers.JwtAuthenticationFailureHandler;
+import com.myproject.study.security.providers.FormLoginAuthenticationProvider;
+import com.myproject.study.security.providers.JwtAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,14 +22,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.SessionManagementFilter;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     @Autowired
     private FormLoginAuthenticationSuccessHandler formLoginAuthenticationSuccessHandler;
+
+    @Autowired
+    private FormLoginAuthenticationProvider provider;
+
+    @Autowired
+    private JwtAuthenticationProvider jwtProvider;
+
+    @Autowired
+    private JwtAuthenticationFailureHandler jwtFailureHandler;
+
+    @Autowired
+    private HeaderTokenExtractor headerTokenExtractor;
 
     @Bean
     CorsFilter corsFilter() {
@@ -56,9 +73,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
+    protected JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+        FilterSkipMatcher matcher = new FilterSkipMatcher(Arrays.asList("/formlogin"),"/api/**");
+        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(matcher,jwtFailureHandler,headerTokenExtractor);
+        filter.setAuthenticationManager(super.authenticationManagerBean());
+
+        return filter;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
+        auth
+                .authenticationProvider(this.provider)
+                .authenticationProvider(this.jwtProvider);
     }
 
     @Override
@@ -70,10 +97,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .cors().disable()
+                .formLogin().disable()
                 .headers().frameOptions().disable();
 
         http
                 .addFilterBefore(corsFilter(), SessionManagementFilter.class)
-                .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
     }
 }

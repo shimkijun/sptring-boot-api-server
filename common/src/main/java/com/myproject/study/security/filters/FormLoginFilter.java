@@ -40,7 +40,6 @@ public class FormLoginFilter extends AbstractAuthenticationProcessingFilter {
         AccountApiRequest accountApiRequest = new ObjectMapper().readValue(req.getReader(),AccountApiRequest.class);
         PreAuthorizationToken token = new PreAuthorizationToken(accountApiRequest);
 
-        log.error("error ======== {}",token);
         return super.getAuthenticationManager().authenticate(token);
     }
 

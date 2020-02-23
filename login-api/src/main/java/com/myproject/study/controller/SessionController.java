@@ -3,13 +3,13 @@ package com.myproject.study.controller;
 import com.myproject.study.model.entity.User;
 import com.myproject.study.model.network.AccessToken;
 import com.myproject.study.model.network.request.UserApiRequest;
+import com.myproject.study.security.tokens.PostAuthorizationToken;
 import com.myproject.study.service.UserApiLogicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -50,6 +50,16 @@ public class SessionController {
         System.out.println(user);
         return ResponseEntity.ok()
                 .body(user);
+    }
+
+    @GetMapping("/hello")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public String getUsername(Authentication authentication){
+
+        PostAuthorizationToken token = (PostAuthorizationToken)authentication;
+
+        return token.getAccountContext().getUsername();
+
     }
 
 }

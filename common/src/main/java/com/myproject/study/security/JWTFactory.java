@@ -20,7 +20,6 @@ public class JWTFactory {
                     .withIssuer("ADMIN")
                     .withClaim("USERNAME",context.getAccount().getUserId())
                     .withClaim("USER_ROLE",context.getAccount().getUserRole().getTitle())
-                    .withClaim("ABC",context.getAccount().getUserRole().getDescription())
                     .sign(generateAlgorithm());
         } catch (Exception e) {
             log.error(e.getMessage());

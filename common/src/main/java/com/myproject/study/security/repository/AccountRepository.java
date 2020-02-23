@@ -1,4 +1,4 @@
-package com.myproject.study.security;
+package com.myproject.study.security.repository;
 
 import com.myproject.study.model.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

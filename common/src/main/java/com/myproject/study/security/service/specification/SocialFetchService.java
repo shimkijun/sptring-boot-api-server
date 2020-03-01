@@ -5,5 +5,6 @@ import com.myproject.study.security.social.SocialUserProperty;
 
 public interface SocialFetchService {
 
-    SocialUserProperty socialUserProperty(SocialLoginResponse res);
+    SocialUserProperty getSocialUserProperty(SocialLoginResponse res);
+
 }

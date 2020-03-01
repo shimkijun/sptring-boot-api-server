@@ -3,10 +3,12 @@ package com.myproject.study.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.study.security.filters.FormLoginFilter;
 import com.myproject.study.security.filters.JwtAuthenticationFilter;
+import com.myproject.study.security.filters.SocialLoginFilter;
 import com.myproject.study.security.handlers.FormLoginAuthenticationSuccessHandler;
 import com.myproject.study.security.handlers.JwtAuthenticationFailureHandler;
 import com.myproject.study.security.providers.FormLoginAuthenticationProvider;
 import com.myproject.study.security.providers.JwtAuthenticationProvider;
+import com.myproject.study.security.providers.SocialLoginAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private HeaderTokenExtractor headerTokenExtractor;
 
+    @Autowired
+    private SocialLoginAuthenticationProvider socialLoginAuthenticationProvider;
+
     @Bean
     CorsFilter corsFilter() {
         CorsFilter filter = new CorsFilter();
@@ -74,8 +79,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        FilterSkipMatcher matcher = new FilterSkipMatcher(Arrays.asList("/formlogin"),"/api/**");
+        FilterSkipMatcher matcher = new FilterSkipMatcher(Arrays.asList("/formlogin","/social"),"/api/**");
         JwtAuthenticationFilter filter = new JwtAuthenticationFilter(matcher,jwtFailureHandler,headerTokenExtractor);
+        filter.setAuthenticationManager(super.authenticationManagerBean());
+
+        return filter;
+    }
+
+    protected SocialLoginFilter socialLoginFilter() throws Exception{
+        SocialLoginFilter filter = new SocialLoginFilter("/social",formLoginAuthenticationSuccessHandler);
         filter.setAuthenticationManager(super.authenticationManagerBean());
 
         return filter;
@@ -85,7 +97,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .authenticationProvider(this.provider)
-                .authenticationProvider(this.jwtProvider);
+                .authenticationProvider(this.jwtProvider)
+                .authenticationProvider(this.socialLoginAuthenticationProvider);
     }
 
     @Override
@@ -103,6 +116,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(corsFilter(), SessionManagementFilter.class)
                 .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(socialLoginFilter(),UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -1,6 +1,7 @@
 package com.myproject.study.model.entity;
 
 
+import com.myproject.study.model.enumclass.SocialProviders;
 import com.myproject.study.model.enumclass.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,9 @@ public class Account {
     private UserRole userRole;
 
     private Long socialId;
+
+    @Enumerated(value = EnumType.STRING)
+    private SocialProviders socialProviders;
 
     private String socialProfilePic;
 

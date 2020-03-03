@@ -48,7 +48,7 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
         String userId = property.getUserId();
         SocialProviders provider = res.getProviders();
 
-        Account account = accountRepository.findBySocialIdAndSocialProvider(Long.valueOf(userId),provider)
+        Account account = accountRepository.findBySocialIdAndSocialProviders(Long.valueOf(userId),provider)
                 .orElseGet(() ->accountRepository.save(new Account(
                         null,
                             property.getUserNickname(),

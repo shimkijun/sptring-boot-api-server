@@ -18,17 +18,12 @@ public class SocialFetchServiceProd implements SocialFetchService {
     @Override
     public SocialUserProperty getSocialUserProperty(SocialLoginResponse res) {
 
-        SocialProviders providers = res.getProviders();
+        SocialProviders provider = res.getProviders();
         RestTemplate restTemplate = new RestTemplate();
 
         HttpEntity<String> entity = new HttpEntity<>("parameter",generateHeader(res.getToken()));
 
-        return restTemplate.exchange(
-                providers.getUserInfoEndpoint(),
-                HttpMethod.GET,
-                entity,
-                providers.getPropertyMetaClass()
-        ).getBody();
+        return restTemplate.exchange(provider.getUserinfoEndpoint(), HttpMethod.GET, entity, provider.getPropertyMetaclass()).getBody();
     }
 
     private HttpHeaders generateHeader(String token){

@@ -8,18 +8,18 @@ import lombok.Getter;
 @Getter
 public enum SocialProviders {
 
-    KAKAO("https://kapi.kakao.com/v2/user/me", KakaoUserProperty.class);
+    KAKAO("https://kapi.kakao.com/v1/user/me", KakaoUserProperty.class);
 
-    private String userInfoEndpoint;
-    private Class<? extends SocialUserProperty> propertyMetaClass;
+    private String userinfoEndpoint;
+    private Class<? extends SocialUserProperty> propertyMetaclass;
 
-    SocialProviders(String userInfoEndpoint, Class<? extends SocialUserProperty> propertyMetaClass){
-        this.userInfoEndpoint = userInfoEndpoint;
-        this.propertyMetaClass = propertyMetaClass;
+    SocialProviders(String userinfoEndpoint, Class<? extends SocialUserProperty> propertyMetaclass) {
+        this.userinfoEndpoint = userinfoEndpoint;
+        this.propertyMetaclass = propertyMetaclass;
     }
 
     @JsonValue
-    public String getProviderName(){
+    public String getProviderName() {
         return this.name();
     }
 

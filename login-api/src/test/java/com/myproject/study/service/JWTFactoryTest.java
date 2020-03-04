@@ -3,7 +3,7 @@ package com.myproject.study.service;
 import com.myproject.study.model.entity.Account;
 import com.myproject.study.model.enumclass.UserRole;
 import com.myproject.study.security.AccountContext;
-import com.myproject.study.security.JWTFactory;
+import com.myproject.study.security.jwt.JWTFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

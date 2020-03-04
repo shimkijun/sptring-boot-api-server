@@ -10,6 +10,7 @@ import com.myproject.study.security.service.specification.SocialFetchService;
 import com.myproject.study.security.social.SocialUserProperty;
 import com.myproject.study.security.tokens.PostAuthorizationToken;
 import com.myproject.study.security.tokens.SocialPreAuthorizationToken;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,14 +21,13 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class SocialLoginAuthenticationProvider implements AuthenticationProvider {
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     @Qualifier("socialFetchServiceProd")
-    @Autowired
-    private SocialFetchService service;
+    private final SocialFetchService service;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -48,19 +48,10 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
         String userId = property.getUserId();
         SocialProviders provider = res.getProviders();
 
-        Account account = accountRepository.findBySocialIdAndSocialProviders(Long.valueOf(userId),provider)
-                .orElseGet(() ->accountRepository.save(new Account(
-                        null,
-                            property.getUserNickname(),
-                            "SOCIAL_USER",
-                            String.valueOf(UUID.randomUUID().getMostSignificantBits()),
-                            UserRole.USER,
-                            Long.valueOf(property.getUserId()),
-                            provider,property.getProfileHref())));
-
-        return account;
+        return accountRepository.findBySocialIdAndSocialProviders(Long.valueOf(userId), provider)
+                .orElseGet(() -> accountRepository.save(
+                        new Account(null, property.getUserNickname(), "SOCIAL_USER", String.valueOf(UUID.randomUUID().getMostSignificantBits()), UserRole.USER, Long.valueOf(property.getUserId()), provider, property.getProfileHref())));
 
     }
-
 
 }

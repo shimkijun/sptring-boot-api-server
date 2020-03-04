@@ -1,5 +1,6 @@
 package com.myproject.study.security;
 
+import com.myproject.study.security.jwt.HeaderTokenExtractor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

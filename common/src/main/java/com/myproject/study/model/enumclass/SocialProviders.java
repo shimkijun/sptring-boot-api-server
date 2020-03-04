@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public enum SocialProviders {
 
-    KAKAO("https://kapi.kakao.com/v1/user/me", KakaoUserProperty.class);
+    KAKAO("https://kapi.kakao.com/v2/user/me", KakaoUserProperty.class);
 
     private String userinfoEndpoint;
     private Class<? extends SocialUserProperty> propertyMetaclass;

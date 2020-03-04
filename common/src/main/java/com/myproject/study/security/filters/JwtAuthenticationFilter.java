@@ -1,6 +1,6 @@
 package com.myproject.study.security.filters;
 
-import com.myproject.study.security.HeaderTokenExtractor;
+import com.myproject.study.security.jwt.HeaderTokenExtractor;
 import com.myproject.study.security.handlers.JwtAuthenticationFailureHandler;
 import com.myproject.study.security.tokens.JwtPreProcessingToken;
 import lombok.extern.slf4j.Slf4j;

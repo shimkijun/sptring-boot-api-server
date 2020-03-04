@@ -4,28 +4,25 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.study.model.network.response.TokenResponse;
 import com.myproject.study.security.AccountContext;
-import com.myproject.study.security.JWTFactory;
+import com.myproject.study.security.jwt.JWTFactory;
 import com.myproject.study.security.tokens.PostAuthorizationToken;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class FormLoginAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    @Autowired
-    private JWTFactory factory;
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final JWTFactory factory;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void onAuthenticationSuccess(

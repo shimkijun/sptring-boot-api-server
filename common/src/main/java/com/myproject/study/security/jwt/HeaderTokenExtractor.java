@@ -1,4 +1,4 @@
-package com.myproject.study.security;
+package com.myproject.study.security.jwt;
 
 import com.myproject.study.security.exception.InvalidJwtException;
 import org.springframework.stereotype.Component;

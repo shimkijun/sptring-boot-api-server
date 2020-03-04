@@ -22,7 +22,6 @@ public class SocialFetchServiceProd implements SocialFetchService {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpEntity<String> entity = new HttpEntity<>("parameter",generateHeader(res.getToken()));
-
         return restTemplate.exchange(provider.getUserinfoEndpoint(), HttpMethod.GET, entity, provider.getPropertyMetaclass()).getBody();
     }
 

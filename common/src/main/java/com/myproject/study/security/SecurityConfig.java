@@ -6,6 +6,7 @@ import com.myproject.study.security.filters.JwtAuthenticationFilter;
 import com.myproject.study.security.filters.SocialLoginFilter;
 import com.myproject.study.security.handlers.FormLoginAuthenticationSuccessHandler;
 import com.myproject.study.security.handlers.JwtAuthenticationFailureHandler;
+import com.myproject.study.security.jwt.HeaderTokenExtractor;
 import com.myproject.study.security.providers.FormLoginAuthenticationProvider;
 import com.myproject.study.security.providers.JwtAuthenticationProvider;
 import com.myproject.study.security.providers.SocialLoginAuthenticationProvider;

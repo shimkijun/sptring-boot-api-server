@@ -1,4 +1,6 @@
-POST http://localhost:8080/social
+GET http://localhost:8080/social
 Content-Type: :application/json
 
-{"provider":"KAKAO","token":"L7QngXNfXhlZliqmJVftuN2f3sDLbpWd9oLoLwo9cxgAAAFwkDI_MQ"}
+{"provider":"KAKAO","token":"fyvTXOavtxc3_Xnq-sZle9BmaX0C4O-t_0V6rgo9dGgAAAFwpdNn8g"}
+
+###

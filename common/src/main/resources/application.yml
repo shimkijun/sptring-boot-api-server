@@ -12,7 +12,7 @@ spring:
     generate-ddl: true
   # Database MySQL
   datasource:
-    url: jdbc:mysql://localhost:3306/my_db?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/my_db?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
     username: root
     password: 1111
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,6 +26,3 @@ spring:
   # Json Configuration
   jackson:
     property-naming-strategy: SNAKE_CASE
-  # Server configuration
-  server:
-    port: 8081 #set your port

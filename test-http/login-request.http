@@ -4,3 +4,10 @@ Content-Type: application/json
 {"userId": "abcd","password": "1234"}
 
 ###
+
+POST http://localhost:8080/api/user/lookup
+Content-Type: application/json
+
+{"email": "fsda@naver.com"}
+
+###

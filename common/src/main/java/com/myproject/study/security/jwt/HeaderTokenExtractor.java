@@ -1,6 +1,6 @@
 package com.myproject.study.security.jwt;
 
-import com.myproject.study.security.exception.InvalidJwtException;
+import com.myproject.study.exception.InvalidJwtException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 

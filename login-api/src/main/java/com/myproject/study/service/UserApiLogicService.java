@@ -7,10 +7,7 @@ import com.myproject.study.model.network.Header;
 import com.myproject.study.model.network.request.UserApiRequest;
 import com.myproject.study.model.network.response.UserApiResponse;
 import com.myproject.study.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +19,22 @@ import java.time.LocalDateTime;
 @Transactional
 public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResponse, User>{
 
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserApiLogicService(JpaRepository<User, Long> baseRepository, PasswordEncoder passwordEncoder) {
+    public UserApiLogicService(JpaRepository<User, Long> baseRepository, PasswordEncoder passwordEncoder, UserRepository userRepository) {
         super(baseRepository);
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+    }
+
+    public Header<UserApiResponse> lookup(UserApiRequest request) {
+
+        return userRepository.findByEmail(request.getEmail())
+                .map(user -> response(user))
+                .map(Header::OK)
+                .orElseGet(() -> Header.ERROR("사용 가능한 이메일 입니다."));
+
     }
 
     @Override
@@ -42,6 +50,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
                 .role(UserRole.USER)
                 .registeredAt(LocalDateTime.now())
                 .build();
+
 
         User newUser = baseRepository.save(user);
 
@@ -65,7 +74,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 
     public UserApiResponse response(User user){
 
-        UserApiResponse userApiResponse = UserApiResponse.builder()
+        return UserApiResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
                 .nickname(user.getNickname())
@@ -73,6 +82,6 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
                 .userRole(user.getRole())
                 .build();
 
-        return userApiResponse;
+
     }
 }

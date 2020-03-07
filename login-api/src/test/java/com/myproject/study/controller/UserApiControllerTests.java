@@ -38,6 +38,22 @@ class UserApiControllerTests {
     @MockBean
     private UserApiLogicService userApiLogicService;
 
+    @DisplayName("사용중인 이메일")
+    @Test
+    void emailLookup() throws Exception{
+
+        UserApiRequest userApiRequest = UserApiRequest.builder()
+                .email("test@naver.com")
+                .build();
+
+        mvc.perform(post("/api/user/lookup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userApiRequest)))
+                .andDo(print());
+
+        verify(userApiLogicService).lookup(eq(userApiRequest));
+    }
+
     @DisplayName("일반회원 가입 테스트")
     @Test
     void create() throws Exception{
@@ -57,5 +73,7 @@ class UserApiControllerTests {
 
         verify(userApiLogicService).create(eq(userApiRequest));
     }
+
+
 
 }

@@ -114,8 +114,8 @@
 </template>
 
 <script>
-import emailField from "~/components/signin/email-field.vue"
-import passwordField from "~/components/signin/password-field.vue"
+import emailField from "~/components/user-form/email-field.vue"
+import passwordField from "~/components/user-form/password-field.vue"
   export default {
     layout: 'disabledHeader',
     components:{
@@ -139,7 +139,7 @@ import passwordField from "~/components/signin/password-field.vue"
       validate () {
             if (this.$refs.passwordForm.validate()) {
               this.snackbar = true
-              this.$axios.post('/api/signin/session',{
+              this.$axios.post('/api/user/signin',{
                   email : this.email,
                   password : this.password,
               })
@@ -153,12 +153,15 @@ import passwordField from "~/components/signin/password-field.vue"
       },
       emailValidate(){
         if (this.$refs.emailForm.validate()) {
-              this.$axios.post('/api/signin/lookup',{
+              this.$axios.post('/api/user/lookup',{
                   email : this.email
               })
               .then((res) => {
-                  this.e1 = 2
-                  console.log(res)
+                  if(res.data.resultCode === "OK"){
+                    this.e1 = 2
+                  }else{
+                    this.valid = true;
+                  }
               })
               .catch((error) => {
                   this.e1 = 2

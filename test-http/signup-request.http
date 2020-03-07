@@ -1,0 +1,6 @@
+POST http://localhost:8080/api/user
+Content-Type: application/json
+
+{"email": "tester@naver.com","password": "1234","nickname": "bbb"}
+
+###

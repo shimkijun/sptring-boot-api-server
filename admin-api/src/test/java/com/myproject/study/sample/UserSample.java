@@ -32,7 +32,6 @@ public class UserSample{
                     .password("password"+i)
                     .status(status)
                     .email("TestUser"+i+"@gmail.com")
-                    .phoneNumber("010-1111-"+String.format("%04d", i))
                     .registeredAt(getRandomDate())
                     .unregisteredAt(status.equals(UserStatus.UNREGISTERED) ? getRandomDate() : null )
                     .build();

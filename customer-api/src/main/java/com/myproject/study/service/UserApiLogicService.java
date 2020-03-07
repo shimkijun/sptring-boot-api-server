@@ -30,7 +30,6 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         User user = User.builder()
                 .password(encodePassword)
                 .status(UserStatus.REGISTERED)
-                .phoneNumber(request.getPhoneNumber())
                 .email(request.getEmail())
                 .registeredAt(LocalDateTime.now())
                 .build();
@@ -60,7 +59,6 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         UserApiResponse userApiResponse = UserApiResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
-                .phoneNumber(user.getPhoneNumber())
                 .status(user.getStatus())
                 .build();
 

@@ -7,6 +7,7 @@ import com.myproject.study.security.AccountContext;
 import com.myproject.study.security.jwt.JWTFactory;
 import com.myproject.study.security.tokens.PostAuthorizationToken;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -18,11 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@RequiredArgsConstructor
 public class FormLoginAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final JWTFactory factory;
-    private final ObjectMapper objectMapper;
+    @Autowired
+    private JWTFactory factory;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     public void onAuthenticationSuccess(

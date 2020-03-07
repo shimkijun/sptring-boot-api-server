@@ -16,12 +16,15 @@ import org.springframework.stereotype.Component;
 import java.util.NoSuchElementException;
 
 @Component
-@RequiredArgsConstructor
 public class FormLoginAuthenticationProvider implements AuthenticationProvider {
 
     private final PasswordEncoder passwordEncoder;
-
     private final AccountRepository accountRepository;
+
+    public FormLoginAuthenticationProvider(PasswordEncoder passwordEncoder, AccountRepository accountRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

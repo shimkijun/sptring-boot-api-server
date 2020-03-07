@@ -17,19 +17,14 @@ public class UserApiRequest {
 
     private Long id;
 
-    private String account;
+    private String email;
 
     private String password;
 
-    private UserStatus status;
+    private String nickname;
 
-    private String email;
+    private UserStatus status;
 
     private UserRole role;
 
-    private String phoneNumber;
-
-    public LocalDateTime registeredAt;
-
-    public LocalDateTime unregisteredAt;
 }

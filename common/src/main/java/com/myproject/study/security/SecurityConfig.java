@@ -13,10 +13,12 @@ import com.myproject.study.security.providers.SocialLoginAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -73,14 +75,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected FormLoginFilter formLoginFilter() throws Exception {
-        FormLoginFilter filter = new FormLoginFilter("/formlogin",formLoginAuthenticationSuccessHandler,null);
+        FormLoginFilter filter = new FormLoginFilter("/api/user/signin",formLoginAuthenticationSuccessHandler,null);
         filter.setAuthenticationManager(super.authenticationManagerBean());
 
         return filter;
     }
 
     protected JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        FilterSkipMatcher matcher = new FilterSkipMatcher(Arrays.asList("/formlogin","/social"),"/api/**");
+        FilterSkipMatcher matcher = new FilterSkipMatcher(Arrays.asList("/social"),"/api/**");
         JwtAuthenticationFilter filter = new JwtAuthenticationFilter(matcher,jwtFailureHandler,headerTokenExtractor);
         filter.setAuthenticationManager(super.authenticationManagerBean());
 
@@ -92,6 +94,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationManager(super.authenticationManagerBean());
 
         return filter;
+    }
+
+    @Override
+    public void configure(WebSecurity webSecurity) throws Exception
+    {
+        webSecurity.ignoring()
+            // All of Spring Security will ignore the requests
+            .antMatchers("/resources/**");
     }
 
     @Override
@@ -115,9 +125,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable();
 
         http
-                .addFilterBefore(corsFilter(), SessionManagementFilter.class)
-                .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(socialLoginFilter(),UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(corsFilter(), SessionManagementFilter.class);
+//                .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(jwtAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(socialLoginFilter(),UsernamePasswordAuthenticationFilter.class);
     }
 }

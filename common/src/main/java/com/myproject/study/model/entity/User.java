@@ -1,5 +1,6 @@
 package com.myproject.study.model.entity;
 
+import com.myproject.study.model.enumclass.SocialProviders;
 import com.myproject.study.model.enumclass.UserRole;
 import com.myproject.study.model.enumclass.UserStatus;
 import lombok.*;
@@ -12,7 +13,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
@@ -29,14 +29,22 @@ public class User {
 
     private String email;
 
+    private String nickname;
+
     private String password;
 
-    private String phoneNumber;
-
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
+
+    private Long socialId;
+
+    @Enumerated(value = EnumType.STRING)
+    private SocialProviders socialProviders;
+
+    private String socialProfilePic;
 
     private LocalDateTime registeredAt;
 

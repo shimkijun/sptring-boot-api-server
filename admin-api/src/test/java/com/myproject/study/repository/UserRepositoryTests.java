@@ -35,7 +35,6 @@ class UserRepositoryTests{
                 .password(encoderPassword)
                 .status(UserStatus.REGISTERED)
                 .email("TestUser03@gmail.com")
-                .phoneNumber("010-3333-3333")
                 .registeredAt(LocalDateTime.now())
                 .build();
         User newUser = userRepository.save(user);

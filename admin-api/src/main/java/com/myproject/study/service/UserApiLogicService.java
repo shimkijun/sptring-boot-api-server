@@ -37,7 +37,6 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         User user = User.builder()
                 .password(encoderPassword)
                 .status(UserStatus.REGISTERED)
-                .phoneNumber(request.getPhoneNumber())
                 .email(request.getEmail())
                 .registeredAt(LocalDateTime.now())
                 .build();
@@ -65,10 +64,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         return user.map(getUser -> {
             getUser.setPassword(body.getPassword())
                     .setStatus(body.getStatus())
-                    .setPhoneNumber(body.getPhoneNumber())
-                    .setEmail(body.getEmail())
-                    .setRegisteredAt(body.getRegisteredAt())
-                    .setUnregisteredAt(body.getUnregisteredAt());
+                    .setEmail(body.getEmail());
 
             return getUser;
         }).map(saveUser -> baseRepository.save(saveUser))
@@ -123,12 +119,8 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 
         UserApiResponse userApiResponse = UserApiResponse.builder()
                 .id(user.getId())
-                .password(user.getPassword())
                 .email(user.getEmail())
-                .phoneNumber(user.getPhoneNumber())
                 .status(user.getStatus())
-                .registeredAt(user.getRegisteredAt())
-                .unregisteredAt(user.getUnregisteredAt())
                 .build();
 
         return userApiResponse;

@@ -23,6 +23,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 
 @SpringBootTest
@@ -74,6 +75,24 @@ class UserApiControllerTests {
         verify(userApiLogicService).create(eq(userApiRequest));
     }
 
+    @DisplayName("회원 인증")
+    @Test
+    void session() throws Exception {
+
+        UserApiRequest userApiRequest = UserApiRequest.builder()
+                .email("tester@naver.com")
+                .password("1234")
+                .build();
+
+
+
+        mvc.perform(post("/api/user/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userApiRequest)))
+                .andExpect(content().string("{\"accessToken\":\"ACCESSTOKEN\"}"))
+                .andDo(print());
+
+    }
 
 
 }

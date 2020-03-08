@@ -6,7 +6,11 @@ import com.myproject.study.model.network.request.UserApiRequest;
 import com.myproject.study.model.network.response.UserApiResponse;
 import com.myproject.study.service.BaseService;
 import com.myproject.study.service.UserApiLogicService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 
 @RestController
@@ -24,5 +28,15 @@ public class UserApiController extends CrudController<UserApiRequest,UserApiResp
     public Header<UserApiResponse> lookupEmail(@RequestBody UserApiRequest request) {
         return userApiLogicService.lookup(request);
     }
+
+
+    @PostMapping("/session")
+    public ResponseEntity<?> session() throws URISyntaxException {
+
+        String url = "/session";
+
+        return ResponseEntity.created(new URI(url)).body("{\"accessToken\":\"ACCESSTOKEN\"}");
+    }
+
 
 }
